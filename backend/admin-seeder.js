@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 const adminDetails = require("./models/details/admin-details.model");
 const connectToMongo = require("./database/db");
 const mongoose = require("mongoose");
@@ -9,7 +10,7 @@ const seedData = async () => {
     // Clear existing admin data
     await adminDetails.deleteMany({});
 
-    const password = "admin123";
+    const password = await bcrypt.hash("admin123", 10);
     const employeeId = 123456;
 
     const adminDetail = {
@@ -45,7 +46,7 @@ const seedData = async () => {
 
     console.log("\n=== Admin Credentials ===");
     console.log("Employee ID:", employeeId);
-    console.log("Password:", password);
+    console.log("Password:", "admin123");
     console.log("Email:", adminDetail.email);
     console.log("=======================\n");
     console.log("Seeding completed successfully!");
